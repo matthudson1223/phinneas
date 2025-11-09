@@ -154,8 +154,9 @@ def choose_chart_type():
 def plot_line_chart(symbol, data):
     """Plot a simple line chart of closing prices."""
     fig, ax = plt.subplots(figsize=(12, 6))
-    ax.plot(data.index, data['Close'], linewidth=2, color='#2E86AB')
-    ax.fill_between(data.index, data['Close'], alpha=0.3, color='#A23B72')
+    dates = data.index.to_numpy()
+    ax.plot(dates, data['Close'], linewidth=2, color='#2E86AB')
+    ax.fill_between(dates, data['Close'], alpha=0.3, color='#A23B72')
 
     ax.set_title(f'{symbol} - Closing Price History', fontsize=16, fontweight='bold')
     ax.set_xlabel('Date', fontsize=12)
@@ -180,14 +181,16 @@ def plot_candlestick_chart(symbol, data):
     down = data[data['Close'] < data['Open']]
 
     # Plot up prices
-    ax.bar(up.index, up['Close'] - up['Open'], width, bottom=up['Open'], color='#06A77D', label='Up')
-    ax.bar(up.index, up['High'] - up['Close'], width2, bottom=up['Close'], color='#06A77D')
-    ax.bar(up.index, up['Low'] - up['Open'], width2, bottom=up['Open'], color='#06A77D')
+    up_dates = up.index.to_numpy()
+    ax.bar(up_dates, up['Close'] - up['Open'], width, bottom=up['Open'], color='#06A77D', label='Up')
+    ax.bar(up_dates, up['High'] - up['Close'], width2, bottom=up['Close'], color='#06A77D')
+    ax.bar(up_dates, up['Low'] - up['Open'], width2, bottom=up['Open'], color='#06A77D')
 
     # Plot down prices
-    ax.bar(down.index, down['Close'] - down['Open'], width, bottom=down['Open'], color='#D62828', label='Down')
-    ax.bar(down.index, down['High'] - down['Open'], width2, bottom=down['Open'], color='#D62828')
-    ax.bar(down.index, down['Low'] - down['Close'], width2, bottom=down['Close'], color='#D62828')
+    down_dates = down.index.to_numpy()
+    ax.bar(down_dates, down['Close'] - down['Open'], width, bottom=down['Open'], color='#D62828', label='Down')
+    ax.bar(down_dates, down['High'] - down['Open'], width2, bottom=down['Open'], color='#D62828')
+    ax.bar(down_dates, down['Low'] - down['Close'], width2, bottom=down['Close'], color='#D62828')
 
     ax.set_title(f'{symbol} - Candlestick Chart', fontsize=16, fontweight='bold')
     ax.set_xlabel('Date', fontsize=12)
@@ -207,7 +210,8 @@ def plot_volume_chart(symbol, data):
     colors = ['#06A77D' if data['Close'].iloc[i] >= data['Open'].iloc[i] else '#D62828'
               for i in range(len(data))]
 
-    ax.bar(data.index, data['Volume'], color=colors, alpha=0.7)
+    dates = data.index.to_numpy()
+    ax.bar(dates, data['Volume'], color=colors, alpha=0.7)
     ax.set_title(f'{symbol} - Trading Volume', fontsize=16, fontweight='bold')
     ax.set_xlabel('Date', fontsize=12)
     ax.set_ylabel('Volume', fontsize=12)
@@ -223,10 +227,13 @@ def plot_combined_chart(symbol, data):
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 10),
                                     gridspec_kw={'height_ratios': [3, 1]})
 
+    # Convert index to numpy array for compatibility
+    dates = data.index.to_numpy()
+
     # Price chart
-    ax1.plot(data.index, data['Close'], linewidth=2, color='#2E86AB', label='Close')
-    ax1.plot(data.index, data['Open'], linewidth=1, color='#F77F00', alpha=0.7, label='Open')
-    ax1.fill_between(data.index, data['Low'], data['High'], alpha=0.2, color='#A23B72', label='High/Low Range')
+    ax1.plot(dates, data['Close'], linewidth=2, color='#2E86AB', label='Close')
+    ax1.plot(dates, data['Open'], linewidth=1, color='#F77F00', alpha=0.7, label='Open')
+    ax1.fill_between(dates, data['Low'], data['High'], alpha=0.2, color='#A23B72', label='High/Low Range')
 
     ax1.set_title(f'{symbol} - Price and Volume History', fontsize=16, fontweight='bold')
     ax1.set_ylabel('Price ($)', fontsize=12)
@@ -236,7 +243,7 @@ def plot_combined_chart(symbol, data):
     # Volume chart
     colors = ['#06A77D' if data['Close'].iloc[i] >= data['Open'].iloc[i] else '#D62828'
               for i in range(len(data))]
-    ax2.bar(data.index, data['Volume'], color=colors, alpha=0.7)
+    ax2.bar(dates, data['Volume'], color=colors, alpha=0.7)
     ax2.set_xlabel('Date', fontsize=12)
     ax2.set_ylabel('Volume', fontsize=12)
     ax2.grid(True, alpha=0.3, axis='y')
