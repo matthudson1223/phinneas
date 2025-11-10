@@ -1,102 +1,105 @@
 # Stock Historical Data Viewer
 
-An interactive Python program that uses yfinance to view and visualize historical stock pricing data.
+An interactive web application to view and analyze historical stock pricing data using real-time data from Yahoo Finance.
 
 ## Features
 
-- Interactive command-line interface
-- Multiple predefined date range options (week, month, 3 months, 6 months, year, YTD)
-- Custom date range selection
-- Multiple visualization types:
-  - Line chart (closing prices)
-  - Candlestick chart
-  - Volume chart
-  - Combined chart (price + volume)
-- Comprehensive stock statistics and summaries
-- Color-coded charts for better readability
+### 📊 Multiple Chart Types
+- **Line Chart**: Closing price with filled area
+- **Candlestick Chart**: OHLC (Open, High, Low, Close) visualization
+- **Volume Chart**: Trading volume with color-coded bars
+- **Combined Chart**: Price and volume in synchronized subplots
+
+### 🎯 Interactive Capabilities
+- **Pan**: Click and drag to move around the chart
+- **Zoom**: Scroll wheel or box select (click-drag)
+- **Hover**: Automatic tooltips showing exact values
+- **Reset**: Double-click to return to original view
+- **Export**: Download charts as PNG images
+- **Toggle**: Click legend items to show/hide data series
+
+### 🔧 User Interface
+- **Web-based**: Everything runs in your browser
+- **Sidebar Controls**: Stock symbol, date ranges, candle intervals, chart types, display options
+- **Candle/Bar Intervals**: Choose from 1 Hour, 4 Hours, 1 Day (default), or 1 Week
+- **Moving Average Overlay**: Toggle on/off with customizable period (2-200)
+- **Summary Statistics**: Key metrics and performance indicators
+- **Data Download**: Export raw data to CSV
+- **Auto-updates**: Charts refresh when you change settings
 
 ## Requirements
 
-- Python 3.7 or higher
-- WSL Ubuntu Linux (tested on version 5.15)
+- Python 3.8+
+- Internet connection (for fetching stock data)
+- Modern web browser
 
 ## Installation
 
-1. Clone this repository:
-```bash
-git clone <repository-url>
-cd phinneas
-```
-
-2. Install required dependencies:
+1. Install required dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
 ## Usage
 
-Run the program:
+### 🌐 Web App (Recommended)
+
+Run the Streamlit web application:
+
+```bash
+streamlit run app.py
+```
+
+This will:
+1. Start a local web server
+2. Automatically open your browser to http://localhost:8501
+3. Display the interactive web interface
+
+**Using the app:**
+1. Enter a stock symbol in the sidebar (e.g., AAPL, MSFT, TSLA)
+2. Select a date range using presets or custom dates
+3. Choose a chart type
+4. Click "Fetch Data" or just change settings (auto-updates)
+5. Interact with the chart: pan, zoom, hover for details
+
+### 📟 Terminal Version (Legacy)
+
+Run the command-line version:
+
 ```bash
 python3 stock_viewer.py
 ```
 
-Or make it executable and run directly:
-```bash
-chmod +x stock_viewer.py
-./stock_viewer.py
-```
-
-### Interactive Steps
-
-1. **Enter Stock Symbol**: Type any valid stock ticker (e.g., AAPL, MSFT, TSLA, GOOGL)
-2. **Select Date Range**: Choose from preset options or enter a custom date range
-3. **View Summary**: Review key statistics about the stock's performance
-4. **Choose Chart Type**: Select how you want to visualize the data
-5. **Repeat or Exit**: View another stock or quit the program
+This provides a hybrid terminal/browser experience where you enter inputs in the terminal and charts open in your browser.
 
 ## Examples
 
-### Quick Start Example
-```bash
-$ python3 stock_viewer.py
+**Popular Stock Symbols:**
+- **US Stocks**: AAPL (Apple), MSFT (Microsoft), GOOGL (Alphabet), TSLA (Tesla), AMZN (Amazon), NVDA (NVIDIA), META (Meta)
+- **International**: VOD.L (London), 0700.HK (Hong Kong)
+- **ETFs**: SPY, QQQ, VTI
+- **Crypto**: BTC-USD, ETH-USD
 
-Enter stock symbol: AAPL
-Select date range: 2 (Last month)
-Select chart type: 4 (All charts)
-```
+## Technologies
 
-### Supported Stock Symbols
+- **Streamlit**: Web application framework
+- **Plotly**: Interactive charting library
+- **yfinance**: Yahoo Finance data API
+- **Pandas**: Data manipulation
+- **NumPy**: Numerical computing
 
-Any stock symbol available on Yahoo Finance, including:
-- US Stocks: AAPL, MSFT, GOOGL, AMZN, TSLA, etc.
-- International: VOD.L (London), 0700.HK (Hong Kong), etc.
-- ETFs: SPY, QQQ, VTI, etc.
-- Crypto: BTC-USD, ETH-USD, etc.
+## Tips
 
-## Dependencies
+- Try different chart types to visualize different aspects of the data
+- Enable Moving Average to overlay trend lines - popular periods: 20 (short-term), 50 (medium-term), 200 (long-term)
+- Combine different intervals with moving averages for multi-timeframe analysis
+- Download data as CSV for further analysis in Excel or other tools
+- Charts are cached for 5 minutes to improve performance
+- The web app auto-updates when you change settings
 
-- **yfinance**: Fetches stock data from Yahoo Finance
-- **matplotlib**: Creates visualizations and charts
-- **pandas**: Data manipulation and analysis
-- **numpy**: Numerical operations
+## Data Source
 
-## Troubleshooting
-
-### Display Issues on WSL
-
-If you encounter issues displaying charts on WSL, ensure you have X server configured:
-
-1. Install VcXsrv or X410 on Windows
-2. Set the DISPLAY variable:
-```bash
-export DISPLAY=:0
-```
-
-Alternatively, use WSLg (built-in GUI support in WSL2 on Windows 11).
-
-### Network Issues
-
-If data fetching fails, check your internet connection and ensure you can access Yahoo Finance.
+Stock data is fetched in real-time from Yahoo Finance using the `yfinance` library.
 
 ## License
 
