@@ -35,3 +35,9 @@ env/
 # OS
 .DS_Store
 Thumbs.db
+
+# Stock data downloads
+stock_data/
+data/
+*.log
+.download_progress.txt

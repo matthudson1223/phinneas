@@ -80,6 +80,64 @@ This provides a hybrid terminal/browser experience where you enter inputs in the
 - **ETFs**: SPY, QQQ, VTI
 - **Crypto**: BTC-USD, ETH-USD
 
+## Batch Download Tool
+
+The project includes a powerful script to download historical data for all stocks listed on NASDAQ and NYSE exchanges:
+
+### 🔽 Download All Stocks Script
+
+```bash
+python3 download_all_stocks.py
+```
+
+**Features:**
+- Downloads ticker lists directly from NASDAQ FTP
+- Fetches historical data for all NASDAQ and NYSE stocks
+- Saves each ticker as a separate CSV file
+- Progress tracking and resumable downloads
+- Configurable date ranges and intervals
+- Automatic retry with exponential backoff
+- Detailed logging to file and console
+
+**Basic Usage:**
+
+```bash
+# Download all NASDAQ and NYSE stocks (last 5 years, daily data)
+python3 download_all_stocks.py
+
+# Download only NASDAQ stocks
+python3 download_all_stocks.py --exchanges NASDAQ
+
+# Download with custom date range
+python3 download_all_stocks.py --start 2020-01-01 --end 2023-12-31
+
+# Download weekly data with custom output directory
+python3 download_all_stocks.py --interval 1wk --output data/weekly
+
+# Start fresh (don't resume from previous download)
+python3 download_all_stocks.py --no-resume
+```
+
+**Available Options:**
+- `--exchanges`: Choose NASDAQ, NYSE, or both (default: both)
+- `--output`: Output directory for CSV files (default: stock_data)
+- `--start`: Start date in YYYY-MM-DD format (default: 5 years ago)
+- `--end`: End date in YYYY-MM-DD format (default: today)
+- `--interval`: Data interval - 1d, 1wk, 1mo (default: 1d)
+- `--delay`: Delay between requests in seconds (default: 0.5)
+- `--no-resume`: Start fresh instead of resuming
+
+**Output:**
+- Creates a directory with one CSV file per ticker
+- Each CSV contains OHLCV data (Open, High, Low, Close, Volume)
+- Progress saved to `.download_progress.txt` for resumable downloads
+- Detailed logs saved to `download_stocks.log`
+
+**Notes:**
+- Downloading all stocks may take several hours depending on parameters
+- The script automatically handles errors and retries failed downloads
+- Resume feature allows you to continue from where you left off if interrupted
+
 ## Technologies
 
 - **Streamlit**: Web application framework
