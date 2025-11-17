@@ -41,7 +41,3 @@ stock_data/
 data/
 *.log
 .download_progress.txt
-
-# Crossword dataset builder output
-crossword_demo/
-crossword_data/
